@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Deployment</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: #fff;
+            padding: 25px 30px;
+            border-radius: 5px;
+            text-align: center; /* Ajout de cette ligne pour centrer le contenu */
+        }
+
+        .title {
+            font-size: 35px;
+            font-weight: 900;
+            position: relative;
+        }
+
+        .title::before {
+            content: '';
+            position: absolute;
+            left: 50px;
+            bottom: 0;
+            height: 3px;
+            width: 500px;
+            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+        }
+
+        .title2 {
+            color: black;
+            font-weight: bold;
+            font-size: large;
+        }
+
+        .field-divided {
+            width: 25%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            font-size: medium;
+        }
+
+        input[type=text]:focus {
+            border: 3px solid #555;
+        }
+
+        .bouton {
+            border-radius: 12px;
+            padding: 12px 140px;
+            transition-duration: 0.4s;
+            color: black;
+            font-weight: 600;
+            font-size: x-large;
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            margin: 0;
+            position: relative;
+            top: 70%;
+            left: 30%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+        .bouton:hover {
+            background-color: #5c4caf;
+            color: white;
+            box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .bouton:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+
+        .bouton:hover span {
+            padding-right: 25px;
+        }
+
+        .resultat {
+            font-size: 35px;
+            font-weight: 900;
+            position: relative;
+            text-align: center;
+        }
+        select {
+    margin-bottom: 10px; /* Add or adjust the margin as needed */
+}
+    </style>
+      <script>
+    function afficherChampsSelonMarier() {
+      var marierSelect = document.getElementsByName('marier')[0];
+      var travailleSelect = document.getElementsByName('Travaille-conjoint')[0];
+      var enfantSelect = document.getElementsByName('avez_des_enfants')[0];
+
+
+      var lbl1 = document.getElementById("lbl1");
+      var lbl2 = document.getElementById("lbl2");
+
+      if (marierSelect.value === '1' || marierSelect.value === '2') {
+        travailleSelect.style.display = 'inline';
+        enfantSelect.style.display = 'inline';
+        lbl1.style.display = 'inline';
+        lbl2.style.display = 'inline';
+      } else {
+        travailleSelect.style.display = 'none';
+        enfantSelect.style.display = 'none';
+        lbl1.style.display = 'none';
+        lbl2.style.display = 'none';
+      }
+    }
+
+    
+    function updateSalaireValue() {
+        var salaireInput = document.getElementById("salaireInput").value;
+        var selectElement = document.getElementsByName("salaire_group")[0];
+
+        if (salaireInput >= 0 && salaireInput <= 700 ){
+            selectElement.value = 0;
+        } else if (salaireInput >= 701 && salaireInput <= 1000) {
+            selectElement.value = 2;
+        } else {
+            selectElement.value = 1;
+        }
+    }
+    
+    function updateKenbyelValue() {
+        var kenbyelInput = document.getElementById("kenbyelInput").value;
+        var selectElement = document.getElementsByName("kenbyel_group")[0];
+
+        if (kenbyelInput >= 0 && kenbyelInput <= 107) {
+            selectElement.value = 1;
+        } else if (kenbyelInput >= 108 && kenbyelInput <= 145) {
+            selectElement.value = 0;
+        } else {
+            selectElement.value = 2;
+        }
+    }
+
+    function updateQteValue() {
+        var QteInput = document.getElementById("QteInput").value;
+        var selectElement = document.getElementsByName("Qte_group")[0];
+
+        if (QteInput >= 1 && QteInput <= 7) {
+            selectElement.value = 2;
+        } else if (QteInput >= 8 && QteInput <= 17) {
+            selectElement.value = 0;
+        } else {
+            selectElement.value = 1;
+        }
+    }
+    function updateAvanceValue() {
+        var avanceInput = document.getElementById("avanceInput").value;
+        var selectElement = document.getElementsByName("Avance_group")[0];
+
+        if (avanceInput >= 0 && avanceInput <= 65) {
+            selectElement.value = 0;
+        } else if (avanceInput >= 66 && avanceInput <= 330) {
+            selectElement.value = 1;
+        } else {
+            selectElement.value = 2;
+        }
+    }
+  </script>
+</head>
+<body>
+    <div class="container">
+     <img src="https://res.cloudinary.com/dw0c5p3l9/image/upload/v1709777501/logo_c2d71n.png" alt="Votre Logo" width="300" height="200">
+        <br>
+        <h1 class="title">Client Estimator</h1>
+    <br>
+        <form action="/predict" method="post">
+
+          <label class="title2" for="marier">Marier:</label>
+  <select name="marier" required onchange="afficherChampsSelonMarier()">
+    <option value=0>Non</option>
+    <option value=1>Oui</option>
+    <option value=2>Divorcer</option>
+  </select><br>
+
+  <label class="title2" for="Travaille-conjoint" style="display:none;" id="lbl1">Travaille conjoint?:</label>
+  <select name="Travaille-conjoint" required style="display:none;">
+    <option value=0>Non</option>
+    <option value=1>Oui</option>
+  </select>
+
+  <br>
+
+  <label class="title2" for="avez_des_enfants" style="display:none;" id="lbl2">avez des enfants?:</label>
+
+  <select name="avez_des_enfants" required style="display:none;">
+    <option value=0>Non</option>
+    <option value=1>Oui</option>
+  </select> <br>
+
+        <label class="title2" for="louer_ou_proprieter">Louer ou propriéter?:</label>
+        <select name="louer_ou_proprieter" required>
+            <option value=0>Louer</option>
+            <option value=1>Propriéter</option>
+        </select><br>
+
+        <label class="title2" for="employer">Employer?:</label>
+        <select name="employer" required>
+            <option value=0>Non</option>
+            <option value=1>Oui</option>
+        </select><br>
+
+        <label class="title2" for="titulaire">Titulaire?:</label>
+        <select name="titulaire" required>
+            <option value=0>Non</option>
+            <option value=1>Oui</option>
+        </select><br>
+
+        <label class="title2" for="salaire_group">Salaire :</label>
+        <input type="number" id="salaireInput" onchange="updateSalaireValue()" name="salaire_group" required><br>
+
+    
+
+
+        <label class="title2" for="déjà_client">déjà client?:</label>
+        <select name="déjà_client" required>
+            <option value=0>Non</option>
+            <option value=1>Oui</option>
+        </select><br>
+
+      
+
+        <label class="title2" for="in_out_sfax">localisation in or out of sfax:</label>
+        <select name="in_out_sfax" required>
+            <option value=0>Out-sfax</option>
+            <option value=1>In-sfax</option>
+        </select><br>
+
+        <label class="title2" for="kenbyel_group">Prix kenbyel :</label>
+        <input type="number" id="kenbyelInput" onchange="updateKenbyelValue()" name="kenbyel_group" placeholder="maximum 200dt" required><br>
+        
+
+        <label class="title2" for="Qte_group">Qte kenbyel :</label>
+        <input type="number" id="QteInput" onchange="updateQteValue()" name="Qte_group" placeholder="maximum 32" required><br>
+
+        <label class="title2" for="Avance_group">Avance :</label>
+        <input type="number" id="avanceInput" onchange="updateAvanceValue()" name="Avance_group" required><br>
+
+        <br>      <br><br>
+
+         <input type="submit" value="Predict" class="bouton">
+        </form>
+
+        <form class="container">
+            {% if result %}
+                <div>
+                    <p class="resultat">Résultat : {{ result }}</p>
+                </div>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>
